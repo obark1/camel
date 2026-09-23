@@ -1,0 +1,47 @@
+plugins {
+	id 'java'
+	id 'org.springframework.boot' version '4.1.1'
+	id 'io.spring.dependency-management' version '1.1.7'
+}
+
+dependencyManagement {
+	imports {
+		mavenBom "org.apache.camel.springboot:camel-spring-boot-bom:4.19.0"
+	}
+}
+
+group = 'com.prep'
+version = '0.0.1-SNAPSHOT'
+
+java {
+	toolchain {
+		languageVersion = JavaLanguageVersion.of(21)
+	}
+}
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'org.apache.camel.springboot:camel-spring-boot-starter'
+	implementation("org.springframework.boot:spring-boot-starter-kafka")
+	implementation 'org.apache.camel.springboot:camel-file-starter'
+	implementation 'org.apache.camel.springboot:camel-kafka-starter'
+	implementation 'org.apache.camel.springboot:camel-jackson3-starter:4.19.0'
+
+	testImplementation 'org.apache.camel:camel-test-spring-junit6'
+	runtimeOnly 'org.postgresql:postgresql'
+	compileOnly 'org.projectlombok:lombok'
+	annotationProcessor 'org.projectlombok:lombok'
+	testImplementation 'org.springframework.boot:spring-boot-starter-data-jpa-test'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	testImplementation 'org.springframework.boot:spring-boot-starter-webmvc-test'
+	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+}
+
+tasks.named('test') {
+	useJUnitPlatform()
+}
