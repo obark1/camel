@@ -30,6 +30,7 @@ dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-kafka")
 	implementation 'org.apache.camel.springboot:camel-file-starter'
 	implementation 'org.apache.camel.springboot:camel-kafka-starter'
+	implementation("org.springframework.boot:spring-boot-starter-actuator")
 	implementation 'org.apache.camel.springboot:camel-jackson3-starter:4.19.0'
 
 	testImplementation 'org.apache.camel:camel-test-spring-junit6'

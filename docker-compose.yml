@@ -10,24 +10,15 @@ services:
     volumes:
       - camel-db-data:/var/lib/postgresql/data
 
-  kafka:
-    image: docker.redpanda.com/redpandadata/redpanda:v26.2.1
-    command:
-      - redpanda
-      - start
-      - --smp=1
-      - --overprovisioned
-      - --node-id=0
-      - --kafka-addr=INTERNAL://0.0.0.0:29092,EXTERNAL://0.0.0.0:9092
-      - --advertise-kafka-addr=INTERNAL://kafka:29092,EXTERNAL://localhost:9092
+  camel-app:
+    image: book-library:local
     ports:
-      - "9092:9092"
+      - "7979:7979"
 
-  console:
-    network_mode: host
-    environment:
-      - KAFKA_BROKERS=localhost:9092
-    image: docker.redpanda.com/redpandadata/console:latest
+  camel-gateway:
+    image: gateway:local
+    ports:
+      - "7878:7878"
 
 volumes:
   camel-db-data:

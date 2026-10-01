@@ -1,0 +1,53 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: book-library
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: book-library
+  template:
+    metadata:
+      labels:
+        app: book-library
+    spec:
+      containers:
+        - name: book-library
+          image: book-library:local
+          imagePullPolicy: Never
+          securityContext:
+            runAsUser: 0
+          ports:
+            - containerPort: 7979
+          readinessProbe:
+            httpGet:
+              path: /actuator/health/readiness
+              port: 7979
+            initialDelaySeconds: 15
+            periodSeconds: 5
+          livenessProbe:
+            httpGet:
+              path: /actuator/health/liveness
+              port: 7979
+            initialDelaySeconds: 30
+            periodSeconds: 10
+
+          env:
+            - name: SPRING_DATASOURCE_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: book-library-config
+                  key: SPRING_DATASOURCE_URL
+
+            - name: SPRING_DATASOURCE_USERNAME
+              valueFrom:
+                configMapKeyRef:
+                  name: book-library-config
+                  key: SPRING_DATASOURCE_USERNAME
+
+            - name: SPRING_DATASOURCE_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-secret
+                  key: POSTGRES_PASSWORD
