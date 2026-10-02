@@ -26,7 +26,7 @@ services:
   console:
     network_mode: host
     environment:
-      - KAFKA_BROKERS=localhost:9092
+      - KAFKA_BROKERS=localhost:9094
     image: docker.redpanda.com/redpandadata/console:latest
 
 volumes:
