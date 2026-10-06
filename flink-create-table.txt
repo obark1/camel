@@ -1,0 +1,11 @@
+
+      CREATE TABLE kafka_events (
+        value STRING
+      ) WITH (
+        'connector' = 'kafka',
+        'topic' = 'offset-playground',
+        'properties.bootstrap.servers' = 'kafka-service.<namespace>.svc.cluster.local:9092',
+        'properties.group.id' = 'flink-sql-demo',
+        'scan.startup.mode' = 'earliest-offset',
+        'format' = 'raw'
+      );

@@ -12,7 +12,7 @@ spec:
     spec:
       containers:
         - name: jobmanager
-          image: apache/flink:2.3.0
+          image: flink-kafka:v2
           args: ["jobmanager"]
           env:
             - name: FLINK_PROPERTIES
